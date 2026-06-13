@@ -7,6 +7,14 @@ export const useAuthStore = defineStore('auth', {
         tenantId: localStorage.getItem('tenant_id'),
         user: JSON.parse(localStorage.getItem('auth_user') ?? 'null'),
     }),
+    getters: {
+        isAuthenticated: (state) => {
+            if (!state.token) return false;
+            return state.token !== 'undefined' && state.token !== 'null';
+        },
+        userName: (state) => state.user?.name ?? 'Usuario',
+        userRoles: (state) => state.user?.roles ?? [],
+    },
     actions: {
         setTenantId(tenantId) {
             this.tenantId = tenantId;
